@@ -19,7 +19,9 @@ RUN apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-
   && curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \
   && chmod +x /usr/local/bin/docker-compose
 
-RUN npm install -g npm@6.4.1
+RUN npm install -g npm@6.4.1 \
+  && npm install -g cypress --unsafe-perm --silent \
+  && npm install -g wait-on --unsafe-perm --silent
 
 # versions of local tools
 RUN node -v

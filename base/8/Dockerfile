@@ -1,4 +1,4 @@
-FROM node:8
+FROM node:8-stretch
 MAINTAINER SAF Platform <info@safplatform.com>
 
 RUN apt-get update \
@@ -18,6 +18,12 @@ RUN apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-
   && apt-get install -y docker-ce jq \
   && curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \
   && chmod +x /usr/local/bin/docker-compose
+
+RUN apt-get -y remove build-essential \
+  && apt-get -y autoremove \
+  && apt-get -y clean \
+  && rm -rf /var/lib/dhcp/* \
+  && rm -rf /dev/.udev/
 
 RUN npm install -g npm@6.4.1 \
   && npm install -g cypress --unsafe-perm --silent \

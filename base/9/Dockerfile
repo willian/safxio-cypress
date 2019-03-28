@@ -1,4 +1,4 @@
-FROM node:9
+FROM node:9-stretch
 MAINTAINER SAF Platform <info@safplatform.com>
 
 RUN apt-get update \
@@ -19,16 +19,11 @@ RUN apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-
   && curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \
   && chmod +x /usr/local/bin/docker-compose
 
-RUN apt-get install -y git
-
-RUN apt-get -y remove linux-headers-$(uname -r) build-essential \
+RUN apt-get -y remove build-essential \
   && apt-get -y autoremove \
   && apt-get -y clean \
   && rm -rf /var/lib/dhcp/* \
-  && rm /etc/udev/rules.d/70-persistent-net.rules \
-  && mkdir /etc/udev/rules.d/70-persistent-net.rules \
-  && rm -rf /dev/.udev/ \
-  && rm /lib/udev/rules.d/75-persistent-net-generator.rules
+  && rm -rf /dev/.udev/
 
 RUN npm install -g npm@6.4.1 \
   && npm install -g cypress --unsafe-perm --silent \
